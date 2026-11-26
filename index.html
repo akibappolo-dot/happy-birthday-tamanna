@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy Birthday, Tamanna! 🎂✨</title>
+<meta name="description" content="A birthday surprise for my best friend Tamanna.">
+<meta property="og:title" content="Happy Birthday, Tamanna! 🎂✨">
+<meta property="og:description" content="Make a wish and blow out the candles.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎂</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#2f1224; --sky2:#471b37; --gold:#ffd166; --rose:#ff7aa2; --teal:#5bc0be; --ivory:#fdfbf7;
+  --display:'Cormorant Garamond',Georgia,serif; --body:'DM Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{background:var(--sky)}
+body{
+  min-height:100vh; color:var(--ivory); font-family:var(--body); font-size:1.08rem; line-height:1.65;
+  background:radial-gradient(ellipse at 50% 0%,var(--sky2),var(--sky) 75%);
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom); overflow-x:hidden;
+}
+canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
+main{max-width:44rem;margin:0 auto;padding:2.5rem 1.25rem 4rem;text-align:center}
+.pill{
+  display:inline-block; font-size:.8rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--gold); border:1px solid rgba(255,209,102,.35); padding:.35rem .95rem; border-radius:999px; margin-bottom:1rem;
+}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(2.8rem,11vw,4.5rem);line-height:1.02}
+h1 span{display:block;font-style:italic;color:var(--rose)}
+.sub{margin-top:.8rem;color:#e6cbd9}
+
+/* Cake & Fancy Candles */
+.cake-wrap{margin:1.75rem auto 0;width:min(21rem,88%);cursor:pointer}
+svg{width:100%;height:auto;display:block;overflow:visible}
+.halo{animation:pulse 1.8s ease-in-out infinite alternate;transition:opacity .35s}
+.flame{transform-origin:50% 100%;animation:flicker .45s ease-in-out infinite alternate;transition:opacity .3s,transform .3s}
+.flame:nth-of-type(2){animation-delay:.12s}
+.flame:nth-of-type(3){animation-delay:.24s}
+.flame:nth-of-type(4){animation-delay:.18s}
+.flame:nth-of-type(5){animation-delay:.3s}
+
+.out .flame,.out .halo{opacity:0;transform:scale(.15);animation:none}
+.smoke{opacity:0}
+.out .smoke{animation:smokeRise 1.7s ease-out forwards}
+.out .smoke:nth-child(2){animation-delay:.1s}
+.out .smoke:nth-child(3){animation-delay:.2s}
+
+@keyframes flicker{
+  from{transform:scale(1,1) rotate(-3deg)}
+  to{transform:scale(.92,1.14) rotate(3deg)}
+}
+@keyframes pulse{
+  from{opacity:.35;transform:scale(.95)}
+  to{opacity:.75;transform:scale(1.12)}
+}
+@keyframes smokeRise{
+  0%{opacity:.75;transform:translateY(0)}
+  100%{opacity:0;transform:translateY(-28px)}
+}
+
+button{
+  font:700 1rem var(--body); color:var(--sky); background:linear-gradient(135deg,var(--gold),#ffbe3b);
+  border:0; border-radius:999px; padding:.95rem 2rem; margin-top:1.6rem; cursor:pointer;
+  box-shadow:0 8px 24px rgba(255,209,102,.32); transition:transform .15s,box-shadow .15s;
+}
+button:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,209,102,.45)}
+button:active{transform:translateY(1px)}
+button:focus-visible{outline:3px solid var(--rose);outline-offset:4px}
+
+#wishes{display:none;margin-top:3rem}
+#wishes.show{display:block;animation:rise .8s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+.letter{
+  background:var(--ivory); color:#240e1c; border-radius:1.35rem; padding:2.1rem 1.75rem;
+  text-align:left; box-shadow:0 18px 45px rgba(0,0,0,.45); border-top:6px solid var(--rose);
+}
+.letter h2{font-family:var(--display);font-size:1.95rem;color:#9e1946;margin-bottom:.85rem}
+.letter p+p{margin-top:1rem}
+.sign{font-family:var(--display);font-style:italic;font-size:1.35rem;font-weight:700;margin-top:1.5rem;text-align:right;color:#9e1946}
+
+/* 6-Slot Polaroid Photo Gallery */
+.gallery-title{
+  font-family:var(--display); font-style:italic; font-size:1.85rem; color:var(--gold);
+  margin:2.5rem 0 1.25rem;
+}
+.gallery{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(11rem,1fr)); gap:1.35rem;
+}
+.polaroid{
+  background:var(--ivory); padding:.75rem .75rem 1.1rem; border-radius:.6rem;
+  box-shadow:0 12px 28px rgba(0,0,0,.38); transition:transform .25s ease;
+}
+.polaroid:nth-child(odd){transform:rotate(-1.8deg)}
+.polaroid:nth-child(even){transform:rotate(1.6deg)}
+.polaroid:hover{transform:rotate(0deg) scale(1.03)}
+.polaroid img{
+  width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:.35rem; display:block;
+  background:#e9dfe5;
+}
+.polaroid figcaption{
+  font-family:var(--display); font-style:italic; font-weight:700; font-size:1.1rem;
+  color:#2a1b30; margin-top:.65rem;
+}
+
+.notes{display:grid;gap:.9rem;margin-top:2.25rem;text-align:left}
+.note{
+  background:rgba(255,255,255,.06); border-left:4px solid var(--gold);
+  border-radius:.65rem; padding:1rem 1.2rem;
+}
+.note:nth-child(2){border-color:var(--rose)}
+.note:nth-child(3){border-color:var(--teal)}
+.note b{display:block;color:var(--gold);margin-bottom:.2rem}
+.note:nth-child(2) b{color:var(--rose)}
+.note:nth-child(3) b{color:var(--teal)}
+
+.again{
+  background:transparent; color:var(--ivory); border:1.5px solid rgba(253,251,247,.35);
+  box-shadow:none; margin-top:2.25rem;
+}
+.again:hover{background:rgba(255,255,255,.08);box-shadow:none}
+footer{margin-top:3rem;font-size:.95rem;color:#c49db1}
+@media (prefers-reduced-motion:reduce){.flame,.halo,.out .smoke,#wishes.show,.polaroid{animation:none;transition:none}}
+</style>
+</head>
+<body>
+<canvas id="fx" aria-hidden="true"></canvas>
+<main>
+  <div class="pill">For My Cutiest Best Friend</div>
+  <h1>Happy Birthday,<span>Tamanna!</span></h1>
+  <p class="sub" id="hint">Make a wish, then blow out the candles.</p>
+
+  <div class="cake-wrap" id="cake" role="button" tabindex="0" aria-label="Birthday cake with five lit candles. Tap to blow them out.">
+    <svg viewBox="0 0 340 310">
+      <defs>
+        <radialGradient id="flameGlow">
+          <stop offset="0%" stop-color="#ffd166" stop-opacity=".85"/>
+          <stop offset="100%" stop-color="#ffd166" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="cakeTier1" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#ff6b98"/>
+          <stop offset="50%" stop-color="#ff8fb1"/>
+          <stop offset="100%" stop-color="#e85483"/>
+        </linearGradient>
+        <linearGradient id="cakeTier2" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#f7cad0"/>
+          <stop offset="50%" stop-color="#ffe5ec"/>
+          <stop offset="100%" stop-color="#f4acb7"/>
+        </linearGradient>
+        <linearGradient id="cakeTier3" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#ffc2d1"/>
+          <stop offset="50%" stop-color="#fff0f3"/>
+          <stop offset="100%" stop-color="#ffb3c6"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Cake Stand -->
+      <ellipse cx="170" cy="296" rx="135" ry="10" fill="#000" opacity=".35"/>
+      <path d="M148 266 h44 l12 24 h-68 z" fill="#e6b85c"/>
+      <ellipse cx="170" cy="290" rx="56" ry="8" fill="#ffd166"/>
+      <ellipse cx="170" cy="264" rx="138" ry="14" fill="#ffd166"/>
+      <ellipse cx="170" cy="261" rx="132" ry="11" fill="#fff8e7"/>
+
+      <!-- Bottom Tier -->
+      <rect x="52" y="198" width="236" height="63" rx="14" fill="url(#cakeTier1)"/>
+      <path d="M54 226 q23 18 46 0 t46 0 t46 0 t46 0 t46 0" fill="none" stroke="#ffd166" stroke-width="3" stroke-linecap="round"/>
+      <g fill="#fff8f0">
+        <circle cx="77" cy="235" r="3"/><circle cx="123" cy="235" r="3"/><circle cx="170" cy="235" r="3"/>
+        <circle cx="217" cy="235" r="3"/><circle cx="263" cy="235" r="3"/>
+      </g>
+      <path d="M52 206 q13 18 26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t26 0 t28 0 v-10 h-236 z" fill="#fff8f6"/>
+
+      <!-- Middle Tier -->
+      <rect x="82" y="142" width="176" height="56" rx="12" fill="url(#cakeTier2)"/>
+      <rect x="82" y="186" width="176" height="6" fill="#ffd166"/>
+      <g fill="#ff5d8f">
+        <circle cx="110" cy="170" r="4.5"/><circle cx="140" cy="172" r="4.5"/>
+        <circle cx="170" cy="170" r="4.5"/><circle cx="200" cy="172" r="4.5"/><circle cx="230" cy="170" r="4.5"/>
+      </g>
+      <path d="M82 149 q11 14 22 0 t22 0 t22 0 t22 0 t22 0 t22 0 t22 0 t22 0 v-8 h-176 z" fill="#ff7aa2"/>
+
+      <!-- Top Tier -->
+      <rect x="112" y="94" width="116" height="48" rx="10" fill="url(#cakeTier3)"/>
+      <path d="M112 102 q11.6 14 23.2 0 t23.2 0 t23.2 0 t23.2 0 t23.2 0 v-9 h-116 z" fill="#ffd166"/>
+
+      <!-- Decorative Frosting Roses -->
+      <g>
+        <circle cx="72" cy="195" r="9" fill="#ff4d79"/><circle cx="72" cy="195" r="4" fill="#ff9ebb"/>
+        <circle cx="268" cy="195" r="9" fill="#ff4d79"/><circle cx="268" cy="195" r="4" fill="#ff9ebb"/>
+        <circle cx="102" cy="140" r="7.5" fill="#e63966"/><circle cx="102" cy="140" r="3" fill="#ff8fab"/>
+        <circle cx="238" cy="140" r="7.5" fill="#e63966"/><circle cx="238" cy="140" r="3" fill="#ff8fab"/>
+      </g>
+
+      <!-- 5 Fancy Spiral Candles -->
+      <g id="candles">
+        <g fill="#ffd166">
+          <rect x="122" y="90" width="12" height="4" rx="2"/>
+          <rect x="142" y="90" width="12" height="4" rx="2"/>
+          <rect x="163" y="90" width="14" height="4" rx="2"/>
+          <rect x="186" y="90" width="12" height="4" rx="2"/>
+          <rect x="206" y="90" width="12" height="4" rx="2"/>
+        </g>
+
+        <rect x="125" y="56" width="6" height="34" rx="3" fill="#fff8f6"/>
+        <path d="M125 63 l6 4 M125 72 l6 4 M125 81 l6 4" stroke="#ff7aa2" stroke-width="2.5"/>
+
+        <rect x="145" y="48" width="6" height="42" rx="3" fill="#ffe5ec"/>
+        <path d="M145 55 l6 4 M145 64 l6 4 M145 73 l6 4 M145 82 l6 4" stroke="#ffd166" stroke-width="2.5"/>
+
+        <rect x="166" y="38" width="8" height="52" rx="4" fill="#ffd166"/>
+        <path d="M166 46 l8 5 M166 56 l8 5 M166 66 l8 5 M166 76 l8 5" stroke="#ff5d8f" stroke-width="2.5"/>
+
+        <rect x="189" y="48" width="6" height="42" rx="3" fill="#ffe5ec"/>
+        <path d="M189 55 l6 4 M189 64 l6 4 M189 73 l6 4 M189 82 l6 4" stroke="#ffd166" stroke-width="2.5"/>
+
+        <rect x="209" y="56" width="6" height="34" rx="3" fill="#fff8f6"/>
+        <path d="M209 63 l6 4 M209 72 l6 4 M209 81 l6 4" stroke="#ff7aa2" stroke-width="2.5"/>
+
+        <circle class="halo" cx="128" cy="44" r="14" fill="url(#flameGlow)"/>
+        <circle class="halo" cx="148" cy="36" r="15" fill="url(#flameGlow)"/>
+        <circle class="halo" cx="170" cy="24" r="18" fill="url(#flameGlow)"/>
+        <circle class="halo" cx="192" cy="36" r="15" fill="url(#flameGlow)"/>
+        <circle class="halo" cx="212" cy="44" r="14" fill="url(#flameGlow)"/>
+
+        <g class="flame">
+          <path d="M128 53 c-6-9 0-16 0-23 c6 7 6 14 0 23z" fill="#ff9f1c"/>
+          <path d="M128 51 c-3-5 0-9 0-13 c3 4 3 8 0 13z" fill="#fff3b0"/>
+        </g>
+        <g class="flame">
+          <path d="M148 45 c-6-9 0-16 0-23 c6 7 6 14 0 23z" fill="#ff9f1c"/>
+          <path d="M148 43 c-3-5 0-9 0-13 c3 4 3 8 0 13z" fill="#fff3b0"/>
+        </g>
+        <g class="flame">
+          <path d="M170 35 c-7-11 0-19 0-27 c7 8 7 16 0 27z" fill="#ff9f1c"/>
+          <path d="M170 33 c-3.5-6 0-11 0-16 c3.5 5 3.5 10 0 16z" fill="#fff3b0"/>
+        </g>
+        <g class="flame">
+          <path d="M192 45 c-6-9 0-16 0-23 c6 7 6 14 0 23z" fill="#ff9f1c"/>
+          <path d="M192 43 c-3-5 0-9 0-13 c3 4 3 8 0 13z" fill="#fff3b0"/>
+        </g>
+        <g class="flame">
+          <path d="M212 53 c-6-9 0-16 0-23 c6 7 6 14 0 23z" fill="#ff9f1c"/>
+          <path d="M212 51 c-3-5 0-9 0-13 c3 4 3 8 0 13z" fill="#fff3b0"/>
+        </g>
+
+        <g class="smoke" stroke="#e2d9f3" stroke-width="2.5" fill="none" stroke-linecap="round">
+          <path d="M128 50 q-4-8 0-16"/>
+          <path d="M148 42 q4-8 0-16"/>
+          <path d="M170 32 q-5-9 0-18"/>
+          <path d="M192 42 q4-8 0-16"/>
+          <path d="M212 50 q-4-8 0-16"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <button id="blowBtn" type="button">Blow Out the Candles ✨</button>
+
+  <section id="wishes" aria-live="polite">
+    <div class="letter">
+      <h2>Tamanna,</h2>
+      <p>Happy Birthday to my best friend and my favorite Bondhu! 🎂✨ Life is so much brighter, funnier, and easier simply because you’re in it.</p>
+      <p>Thank you for every shared secret, every random laugh until we can't breathe, and for always understanding me without me even having to explain. You deserve the happiest year ahead—filled with peace, big achievements, and everything you’ve been wishing for.</p>
+      <p>No matter how busy life gets or where we go, you will always have me in your corner. Have the most magical birthday, Tamanna! 🥂💛</p>
+      <p class="sign">Always your best friend,<br>Akib</p>
+    </div>
+
+    <!-- 6-Photo Memories Section -->
+    <h3 class="gallery-title">Favorite Moments</h3>
+    <div class="gallery">
+      <figure class="polaroid">
+        <img src="images/photo1.jpg" alt="Tamanna and Akib memory 1">
+        <figcaption>Bestie chaos ✨</figcaption>
+      </figure>
+      <figure class="polaroid">
+        <img src="images/photo2.jpg" alt="Tamanna and Akib memory 2">
+        <figcaption>Unstoppable 💛</figcaption>
+      </figure>
+      <figure class="polaroid">
+        <img src="images/photo3.jpg" alt="Tamanna and Akib memory 3">
+        <figcaption>Always laughing 🌸</figcaption>
+      </figure>
+      <figure class="polaroid">
+        <img src="images/photo4.jpg" alt="Tamanna and Akib memory 4">
+        <figcaption>Core memory 💫</figcaption>
+      </figure>
+      <figure class="polaroid">
+        <img src="images/photo5.jpg" alt="Tamanna and Akib memory 5">
+        <figcaption>Good vibes only 🥂</figcaption>
+      </figure>
+      <figure class="polaroid">
+        <img src="images/photo6.jpg" alt="Tamanna and Akib memory 6">
+        <figcaption>Forever 💖</figcaption>
+      </figure>
+    </div>
+
+    <div class="notes">
+      <div class="note"><b>Brightest Days Ahead</b>May this new chapter bring you endless reasons to smile.</div>
+      <div class="note"><b>Unstoppable You</b>Keep chasing your goals—I’m always rooting for your wins.</div>
+      <div class="note"><b>Forever Besties</b>Here’s to many more years of memories and inside jokes.</div>
+    </div>
+
+    <button class="again" id="again" type="button">Light the Candles Again</button>
+  </section>
+
+  <footer>শুভ জন্মদিন, Tanha 🎂💛</footer>
+</main>
+
+<script>
+(function(){
+  var cake=document.getElementById('cake'), wishes=document.getElementById('wishes'),
+      blowBtn=document.getElementById('blowBtn'), hint=document.getElementById('hint'),
+      again=document.getElementById('again'), cv=document.getElementById('fx'), ctx=cv.getContext('2d'),
+      calm=window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+      colors=['#ffd166','#ff7aa2','#5bc0be','#fff8f6','#ff9f1c'], bits=[], running=false;
+
+  function size(){cv.width=innerWidth*devicePixelRatio;cv.height=innerHeight*devicePixelRatio}
+  size(); addEventListener('resize',size);
+
+  function burst(){
+    var n=calm?0:155, d=devicePixelRatio;
+    for(var i=0;i<n;i++){
+      var side=i%2?1:-1;
+      bits.push({
+        x:(side>0?0.18:0.82)*cv.width, y:cv.height*0.62,
+        vx:(Math.random()*9+3)*side*d, vy:-(Math.random()*16+7)*d,
+        s:(Math.random()*7+4)*d, r:Math.random()*6, vr:(Math.random()-.5)*.35,
+        c:colors[i%colors.length], life:1, circle:i%3===0
+      });
+    }
+    if(!running){running=true;requestAnimationFrame(tick)}
+  }
+
+  function tick(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    bits=bits.filter(function(b){return b.life>0&&b.y<cv.height+40});
+    bits.forEach(function(b){
+      b.vy+=.42*devicePixelRatio; b.vx*=.985; b.x+=b.vx; b.y+=b.vy; b.r+=b.vr; b.life-=.0055;
+      ctx.save(); ctx.globalAlpha=Math.max(b.life,0); ctx.translate(b.x,b.y); ctx.rotate(b.r);
+      ctx.fillStyle=b.c;
+      if(b.circle){ctx.beginPath();ctx.arc(0,0,b.s/2,0,Math.PI*2);ctx.fill();}
+      else{ctx.fillRect(-b.s/2,-b.s/4,b.s,b.s/2);}
+      ctx.restore();
+    });
+    if(bits.length)requestAnimationFrame(tick); else running=false;
+  }
+
+  function blowOut(){
+    if(cake.classList.contains('out'))return;
+    cake.classList.add('out');
+    blowBtn.style.display='none';
+    hint.textContent='Your wish is on its way, Tamanna! ✨';
+    wishes.classList.add('show');
+    burst(); setTimeout(burst,450);
+    setTimeout(function(){wishes.scrollIntoView({behavior:calm?'auto':'smooth',block:'start'})},650);
+  }
+
+  blowBtn.addEventListener('click',blowOut);
+  cake.addEventListener('click',blowOut);
+  cake.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();blowOut();}});
+
+  again.addEventListener('click',function(){
+    cake.classList.remove('out'); wishes.classList.remove('show');
+    blowBtn.style.display=''; hint.textContent='Make a wish, then blow out the candles.';
+    scrollTo({top:0,behavior:calm?'auto':'smooth'});
+  });
+})();
+</script>
+</body>
+</html>
